@@ -1,4 +1,5 @@
 using HospitalViewer.Data;
+using HospitalViewer.Data.Interfaces;
 using HospitalViewer.EndpointHandlers;
 using HospitalViewer.Models;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
@@ -24,6 +25,8 @@ builder.Services.AddIdentityServer()
 
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
+
+builder.Services.AddScoped<IHospitalService, HospitalService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
