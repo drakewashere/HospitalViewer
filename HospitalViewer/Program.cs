@@ -1,8 +1,11 @@
 using HospitalViewer.Data;
+using HospitalViewer.EndpointHandlers;
 using HospitalViewer.Models;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,5 +55,19 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.MapFallbackToFile("index.html"); ;
+
+app.MapGet("oidcConfiguration/_configuration/{clientId}", (string clientId, IClientRequestParametersProvider provider, HttpContext HttpContext) => provider.GetClientParameters(HttpContext, clientId));
+
+
+app.MapGet("/hospitals/{zip}", HospitalEndpoints.GetHospitals);
+app.MapPost("/hospitals/edit/", HospitalEndpoints.AddEditHospital);
+app.MapDelete("/hospitals/delete/{hospitalId}", HospitalEndpoints.RemoveHospital);
+
+app.MapGet("/contacts/{hospitalId}", ContactEndpoints.GetContactsForHospital);
+app.MapPost("/contacts/edit", ContactEndpoints.AddEditContact);
+app.MapDelete("/contacts/delete/{contactId}", ContactEndpoints.RemoveContact);
+
+app.MapPost("/hospital/link", ContactLinkEndpoints.LinkContact);
+app.MapDelete("/hospital/unlink/{hospitalId}/{contactId}", ContactLinkEndpoints.UnlinkContact);
 
 app.Run();
