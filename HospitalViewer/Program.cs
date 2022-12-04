@@ -59,7 +59,8 @@ app.MapRazorPages();
 
 app.MapFallbackToFile("index.html"); ;
 
-app.MapGet("oidcConfiguration/_configuration/{clientId}", (string clientId, IClientRequestParametersProvider provider, HttpContext HttpContext) => provider.GetClientParameters(HttpContext, clientId));
+app.MapGet("oidcConfiguration/_configuration/{clientId}", 
+    (string clientId, IClientRequestParametersProvider provider, HttpContext HttpContext) => provider.GetClientParameters(HttpContext, clientId));
 
 
 app.MapGet("/hospitals/{zip}", HospitalEndpoints.GetHospitals);
