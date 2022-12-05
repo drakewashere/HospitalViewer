@@ -1,11 +1,14 @@
 ﻿#nullable disable
 
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalViewer.Data.DTOs
 {
     public class HospitalContact
     {
+        [Key]
+        public long HospitalContactId { get; set; }
         public long HospitalId { get; set; }
         public long ContactId { get; set; }
         public HospitalContactRoleId HospitalContactRoleId { get; set; }
