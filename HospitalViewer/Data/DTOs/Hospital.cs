@@ -7,7 +7,7 @@ namespace HospitalViewer.Data.DTOs
     public class Hospital
     {
         [Key]
-        public long HospitalId { get; set; }
+        public long? HospitalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string PhoneNumber { get; set; }

@@ -64,15 +64,15 @@ app.MapGet("oidcConfiguration/_configuration/{clientId}",
 
 
 app.MapGet("/api/hospitals/{zip?}", HospitalEndpoints.GetHospitals);
-app.MapPost("/api/hospitals/edit/", HospitalEndpoints.AddEditHospital);
+app.MapPost("/api/hospitals/edit", HospitalEndpoints.AddEditHospital);
 app.MapDelete("/api/hospitals/delete/{hospitalId}", HospitalEndpoints.RemoveHospital);
 
 app.MapGet("/api/contacts/{hospitalId}", ContactEndpoints.GetContactsForHospital);
 app.MapPost("/api/contacts/edit", ContactEndpoints.AddEditContact);
 app.MapDelete("/api/contacts/delete/{contactId}", ContactEndpoints.RemoveContact);
 
-app.MapPost("/api/hospital/link", ContactLinkEndpoints.LinkContact);
-app.MapDelete("/api/hospital/unlink/{hospitalId}/{contactId}", ContactLinkEndpoints.UnlinkContact);
+app.MapPost("/api/hospitals/link", ContactLinkEndpoints.LinkContact);
+app.MapDelete("/api/hospitals/unlink/{hospitalId}/{contactId}", ContactLinkEndpoints.UnlinkContact);
 
 app.MapGet("/api/data/generate", TestDataEndpoints.Generate);
 app.MapGet("/api/data/truncate", TestDataEndpoints.Truncate);

@@ -21,6 +21,7 @@ namespace HospitalViewer.Data
         private static Expression<Func<Hospital, HospitalDisplayModel>> HospitalDisplay
             => h => new HospitalDisplayModel()
             {
+                HospitalId = h.HospitalId!.Value,
                 Name = h.Name,
                 Description = h.Description,
                 PhoneNumber = h.PhoneNumber,

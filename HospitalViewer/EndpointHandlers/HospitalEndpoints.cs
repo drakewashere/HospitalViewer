@@ -1,6 +1,7 @@
 ﻿using HospitalViewer.Data.DTOs;
 using HospitalViewer.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace HospitalViewer.EndpointHandlers
 {
@@ -22,10 +23,23 @@ namespace HospitalViewer.EndpointHandlers
             }
         }
 
-        public static async Task<IResult> AddEditHospital(Hospital editHospital, IHospitalService hospitalService)
+        public static async Task<IResult> AddEditHospital(HttpRequest request, IHospitalService hospitalService)
         {
             try
             {
+                var body = "";
+                using (var sr = new StreamReader(request.Body))
+                {
+                    body = await sr.ReadToEndAsync();
+                }
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                };
+
+                var editHospital = JsonSerializer.Deserialize<Hospital>(body, options);
+
                 var hospital = await hospitalService.AddEditHospital(editHospital);
                 var add = editHospital.HospitalId == 0;
                 if (hospital.HospitalId != 0)
