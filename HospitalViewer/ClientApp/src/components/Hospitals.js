@@ -9,7 +9,8 @@ export class Hospitals extends Component {
       this.state = {
           hospitals: [],
           loading: true,
-          showEdit: false
+          showEdit: false,
+          showContacts: false,
       };
 
       this.hospitalId = createRef();
@@ -52,7 +53,7 @@ export class Hospitals extends Component {
             <th>Description</th>
             <th>Address</th>
             <th>Phone Number</th>
-                    <th><button onClick={() => this.setState({ showEdit: true })}>Add</button></th>
+                    <th><button onClick={() => { this.setState({ showEdit: true, showContacts: false }); this.resetForm();  }}>Add</button></th>
           </tr>
         </thead>
         <tbody>
@@ -63,17 +64,18 @@ export class Hospitals extends Component {
               <td>{parse(hospital.addressDisplayHtml)}</td>
               <td>{hospital.phoneNumber}</td>
                   <td><button>Contacts</button>
-                      <br /><button onClick={async () => { this.setState({ showEdit: true }); this.hospitalId.current = hospital.hospitalId; await this.populateFormData(); }}>Edit</button>
+                      <br /><button onClick={async () => { this.setState({ showEdit: true, showContacts: false }); this.hospitalId.current = hospital.hospitalId; await this.populateFormData(); }}>Edit</button>
                       <br /><button onClick={async () => { this.hospitalId.current = hospital.hospitalId; await this.deleteHospital(); } }>Delete</button>
                   </td>
             </tr>
           )}
         </tbody>
         </table>
-
+        , this.state.showContacts || this.state.showEdit
+            ? <div className="container"><div className="row"><div className="col-12"><button onClick={() => this.setState({ showEdit: false, showContacts: false })}>Close Dialog</button></div></div></div>
+            : null,
         , this.state.showEdit
         ? < div className = "container" >
-            <div className="row"><div className="col-12"><button onClick={() => this.setState({ showEdit: false })}>Close Dialog</button></div></div>
             <div className="row"><div className="col-12"><h3>{this.hospitalId.current && this.hospitalId.current !== 0 ? "Edit" : "Add"} Hospital</h3></div></div>
             
             <form onSubmit={this.addEditHospital}>
