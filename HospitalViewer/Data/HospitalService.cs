@@ -21,13 +21,16 @@ namespace HospitalViewer.Data
         private static Expression<Func<Hospital, HospitalDisplayModel>> HospitalDisplay
             => h => new HospitalDisplayModel()
             {
+                Name = h.Name,
+                Description = h.Description,
+                PhoneNumber = h.PhoneNumber,
                 AddressLine1 = h.AddressLine1,
                 AddressLine2 = h.AddressLine2,
                 AddressLine3 = h.AddressLine3,
                 AddressZip = h.AddressZip,
                 AddressCity = h.AddressCity,
                 AddressState = h.AddressState,
-                Contacts = h.HospitalContacts.Where(hc => hc.Contact.DeleteDate == null).Select(ContactsDisplay).ToList()
+                Contacts = h.HospitalContacts.AsQueryable().Where(hc => hc.Contact.DeleteDate == null).Select(ContactsDisplay).ToList()
             };
 
         private static Expression<Func<HospitalContact, ContactDisplayModel>> ContactsDisplay

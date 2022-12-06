@@ -63,15 +63,18 @@ app.MapGet("oidcConfiguration/_configuration/{clientId}",
     (string clientId, IClientRequestParametersProvider provider, HttpContext HttpContext) => provider.GetClientParameters(HttpContext, clientId));
 
 
-app.MapGet("/hospitals/{zip}", HospitalEndpoints.GetHospitals);
-app.MapPost("/hospitals/edit/", HospitalEndpoints.AddEditHospital);
-app.MapDelete("/hospitals/delete/{hospitalId}", HospitalEndpoints.RemoveHospital);
+app.MapGet("/api/hospitals/{zip?}", HospitalEndpoints.GetHospitals);
+app.MapPost("/api/hospitals/edit/", HospitalEndpoints.AddEditHospital);
+app.MapDelete("/api/hospitals/delete/{hospitalId}", HospitalEndpoints.RemoveHospital);
 
-app.MapGet("/contacts/{hospitalId}", ContactEndpoints.GetContactsForHospital);
-app.MapPost("/contacts/edit", ContactEndpoints.AddEditContact);
-app.MapDelete("/contacts/delete/{contactId}", ContactEndpoints.RemoveContact);
+app.MapGet("/api/contacts/{hospitalId}", ContactEndpoints.GetContactsForHospital);
+app.MapPost("/api/contacts/edit", ContactEndpoints.AddEditContact);
+app.MapDelete("/api/contacts/delete/{contactId}", ContactEndpoints.RemoveContact);
 
-app.MapPost("/hospital/link", ContactLinkEndpoints.LinkContact);
-app.MapDelete("/hospital/unlink/{hospitalId}/{contactId}", ContactLinkEndpoints.UnlinkContact);
+app.MapPost("/api/hospital/link", ContactLinkEndpoints.LinkContact);
+app.MapDelete("/api/hospital/unlink/{hospitalId}/{contactId}", ContactLinkEndpoints.UnlinkContact);
+
+app.MapGet("/api/data/generate", TestDataEndpoints.Generate);
+app.MapGet("/api/data/truncate", TestDataEndpoints.Truncate);
 
 app.Run();

@@ -6,7 +6,7 @@ namespace HospitalViewer.EndpointHandlers
 {
     public static class HospitalEndpoints
     {
-        public static async Task<IResult> GetHospitals(string zip, IHospitalService hospitalService)
+        public static async Task<IResult> GetHospitals(string? zip, IHospitalService hospitalService)
         {
             try
             {
